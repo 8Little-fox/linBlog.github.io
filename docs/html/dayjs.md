@@ -19,6 +19,7 @@ dayjs(`${new Date()}`).format('YYYY-MM-DD HH:mm:ss');
 ## 日期-转时间戳
 ```js
 const date = '2020-04-04 22:30';
+
 console.log('*****', dayjs(date).valueOf());
 // 1586010600000
 ```
