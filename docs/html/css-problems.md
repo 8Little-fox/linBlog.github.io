@@ -16,5 +16,7 @@ content + padding + border + margin
 
 ## scrollWidth、offsetWidth、clientWidth
 * scrollWidth  实际宽度
+
 * offsetWidth width+padding+border
+
 * clientWidth width+padding
