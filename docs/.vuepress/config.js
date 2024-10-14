@@ -31,7 +31,7 @@ module.exports = {
         {
           title: "后端Java",
           collapsable: true,
-          children:['Java', "C/C++","MySQL"]
+          children:['Java',"MySQL"]
         },
         {
           title: "Vue",
