@@ -7,7 +7,7 @@
  * @FilePath: \sll-blog\docs\.vuepress\config.js
  */
 module.exports = {
-  base: "/blog/",
+  base: "/linBlog.github.io/",
   theme: 'vdoing',
   themeConfig: {
     nav: [
