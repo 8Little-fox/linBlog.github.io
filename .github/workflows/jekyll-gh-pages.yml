@@ -4,7 +4,8 @@ on:
   # 提交到master分支触发
   push:
     branches: [ "master" ]
-
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
