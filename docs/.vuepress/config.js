@@ -17,8 +17,8 @@ module.exports = {
       { text: "Vue", link: "https://8little-fox.github.io/linBlog.github.io/pages/8b2920/" },
       { text: "Javascript", link: "https://8little-fox.github.io/linBlog.github.io/pages/502ee9/" },
       { text: "TypeScript", link: "https://8little-fox.github.io/linBlog.github.io/pages/15bd48/" },
-      { text: "Vue3源码解析", link: "https://8little-fox.github.io/linBlog.github.io/monorepo" },
-      { text: "Gitee", link: "https://8little-fox.github.io/linBlog.github.io/projects" },
+      { text: "Vue3源码解析", link: "https://8little-fox.github.io/linBlog.github.io/pages/2b6a91/" },
+      { text: "Gitee", link: "https://gitee.com/ll3462540450/projects" },
       { text: "GitHub", link: "https://github.com/8Little-fox/Blog" },
     ],
     sidebar: {
