@@ -82,4 +82,48 @@ SELECT DISTINCT name FROM dish_flavor;
 --  根据价格降序排列
 SELECT * FROM dish ORDER BY price desc;
 ```
+### 内连接查询
+* 如果查询数据的来源来自多张表，则必须对这些表进行连接查询，连接是把不同表的记录连到一起的最普遍的方法，通过连接查询可将多个表作为一个表进行处理，连接查询分为内连接和外连接
+
+```js
+// --语法1 （隐式内连接）
+select 字段1,字段2...
+from 表1,表2...
+where 过滤条件;
+// 在address_book表和user表中查询 consignee和user两个字段相等的数据 
+ SELECT address_book.consignee,user.name FROM address_book,user WHERE address_book.consignee = user.name
+
+
+// --语法2 （显式内连接）
+select 字段1,字段2...
+from 表1 inner join 表2 ...
+on 过滤条件;
+
+select address_book.consignee,user.name from address_book inner join user on address_book.consignee = user.name;
+
+```
+
+### 外连接查询
+
+```js 语法
+-- --左外连接
+-- select 字段1，字段2..
+-- from 表1 left outer join 表2 on 过滤条件;
+-- 
+-- --右外连接
+-- select 字段1，字段2..
+-- from 表1 right outer join 表2 on 过滤条件；
+-- 
+
+
+SELECT address_book.consignee,user.name from address_book left outer join user on address_book.consignee = user.name
+
+SELECT address_book.consignee,user.name FROM address_book right outer join user on  address_book.consignee = user.name
+
+```
+>
+* 左外连接和右外连接有一点区别：
+* 左外连接：是表1和表2的交集再并上表1的其他数据
+* 右外连接：是表1和表2的交集再并上表2的其他数据
+简单点说就是求交集之后并上city的其他数据，没有匹配的为NULL
 ### 陆续更新中
