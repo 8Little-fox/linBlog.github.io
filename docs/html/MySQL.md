@@ -29,12 +29,25 @@ use 数据库名称;
 show table; // 查看表
 source 本地sql文件的地址 // 导入本地sql
 ```
-## SQL常用语句
+## 创建表
+```js
+create table work (  
+  name VARCHAR(10),  
+  job   VARCHAR(9),  
+  sal   double(7,2),  
+  comm  double(7,2) )
+```
+## 查询语句
 ### 无条件查询 
 ```js
 // --查询表中所有数据
 select * from 表名;
 ```
+###  统计查询
+```js
+SELECT COUNT(*) FROM 表名;
+```
+
 ### between and
 * 查询在…到…之间(between and / && / and)
 ```js
@@ -126,4 +139,28 @@ SELECT address_book.consignee,user.name FROM address_book right outer join user 
 * 左外连接：是表1和表2的交集再并上表1的其他数据
 * 右外连接：是表1和表2的交集再并上表2的其他数据
 简单点说就是求交集之后并上city的其他数据，没有匹配的为NULL
+
+## 插入语句
+```js
+// 单条数据插入
+// insert into 表名（列名，列名） values（值，值）
+INSERT INTO user(id, name, phone, status) VALUES (3, '小妹', 18842323434, 1)
+// 多条数据插入
+INSERT INTO user(id, name, phone, status) VALUES ( 4,'朱姗姗',18888888888,0),(5,'朱姗姗',13333333333,0)
+```
+## 删除语句
+```js
+delete from 表名 where 判断条件
+```
+## 更改语句
+```js
+update 表名 set 列名=值 where 判断条件
+
+```
+## 设置字段别名
+```js
+原字段名 AS 字段别名             ——select ID as 学号from A
+字段别名 = 原字段名               ——select 学号=ID from A
+原字段名 空格 字段别名          ——select ID 学号 from A
+```
 ### 陆续更新中
