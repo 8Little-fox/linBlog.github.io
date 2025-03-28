@@ -49,6 +49,11 @@ module.exports = {
           children: ["es", "tools"],
         },
         {
+          title: "course",
+          collapsable: true,
+          children: ["C++", "Python"],
+        },
+        {
           title: "TypeScript",
           collapsable: true,
           children: ["ts", 'ts-examples'],
