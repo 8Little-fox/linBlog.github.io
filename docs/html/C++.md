@@ -24,16 +24,55 @@ const double PI = 3.14159;  // 常量
 auto x = 3.14;             // 自动类型推断
 ```
 ### 1.3 基本数据类型
+* 字节（Byte）是计算机存储数据的最小单元
+* 占字节数越多的数据类型，容量越大（能存储的数值范围越大）
+
 | 类型   | 说明  | 示例   |
 |--------|--------|--------|
-| int   | 整型 | int age = 25; |
-| float   | 单精度浮点 | float price = 9.99f; |
-| double   | 双精度浮点 | double pi = 3.1415926; |
-| char   | 字符 | char grade = 'A'; |
-| bool   | 布尔 | bool is_valid = true; |
+| int   | 整型 4字节 | int age = 25; |
+| long long   | 长整型 8字节 | int age = 25; |
+| float   | 单精度浮点 4字节| float price = 9.99f; (7位有效数字)| 
+| double   | 双精度浮点 8字节 | double pi = 3.1415926;  (15～16位有效数字)|
+| long double   | 长双精度浮点 16字节 | 
+| char   | 字符 1字节 | char grade = 'A'; |
+| bool   | 布尔 1字节 | bool is_valid = true; |
 | void   | 无类型 | void func(); |
 
+#### 求数据类型长度-sizeof(变量｜数据类型｜数值)
+* 返回数据类型 `占用的字节数`
+* sizeof()的优先级比 *、/、%的优先级高
+### 1.4 输出
+* 格式化输出
 
+格式化输出所用的函数为 printf，它可以输出任意位数的小数。
+
+使用格式：printf(“%.nf”,a)。这句话的作用是将变量a保留n位小数输出。
+
+>注意事项：
+>* 这里的n，需要具体化为一个数字，保留几位小数，如保留两位小数，n就改成2，保留三位小数，n就改成3;
+>* %后面的小数点一定不能漏掉。
+>* 使用printf的时候，一定要注意加上头文件`#include<cstdio>`
+
+![图片](../assets/imgs/c++_printf.jpg)
+
+* fixed 配合 setprecision(n) 可以控制 cout 语句中浮点数的输出精度
+* 头文件 `<iomanip>`
+```c
+cout<< fixed << setprecision(6)<< endl;
+```
+```c
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int main() {
+  double a = 6.8;
+  int b = 5;
+  int c = 3;
+  // cout<< a*(b+c);
+  printf("%.2f", a*(b+c));
+  return 0;
+}
+```
 ## 二、运算符与表达式
 ### 2.1 算术运算符
 ```c
@@ -88,20 +127,25 @@ switch (grade) {
       bonus = 0;
 }
 ```
-### 3.2 循环结构
+### 3.2 循环结构 for
 ```c
-// for循环
 for (int i = 0; i < 10; i++) {
     cout << i << " ";
 }
+```
 
-// while循环
+### 3.3  while循环
+```c
 int j = 0;
 while (j < 10) {
     cout << j++ << " ";
 }
-
-// do-while循环
+```
+### 3.4 do-while循环
+先执行，后判断
+* do-while 先执行循环体，后判断循环条件
+* 如果循环条件成立，则再次执行循环体，否则结束循环
+```c
 int k = 0;
 do {
     cout << k++ << " ";
