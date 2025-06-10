@@ -1025,7 +1025,7 @@ def getComputer(*args):
 getComputer(1,2,3,4)
 #(1,2,3,4)
 ```
-关键字可变参数用**来声明，它和可变参数的区别在于关键字参数是一个字典类型，并且参数的key值必须是一个字符串。
+关键字可变参数用`**来声明`，它和可变参数的区别在于关键字参数是`一个字典类型`，并且参数的key值必须是一个字符串。
 ```py
 def getComputer(*args):
     print(args)
@@ -1037,6 +1037,22 @@ getComputer(**dictA) #{"name": "小明", "age": 26}
 #实际参数:  传递的实际参数的key键必须是字符串，否则报如下错误
 getComputer(name: "小妹", age = 27) #{"name": "小妹", "age": 27}
 # 可选参数必须放到关键字参数之前，不然会报语法错误
+```
+>可选参数必须放到关键字参数之前，不然会报语法错误
+```py
+def complexFunc(*a, **b):
+    print(a)
+    print(b)
+
+complexFunc()  
+# ()
+# {}
+complexFunc(1,2,3)
+# (1, 2, 3)
+# {}
+complexFunc(1,2,3, name="琳琳",age = 28)
+# (1, 2, 3)
+# {'name': '琳琳', 'age': 28}
 ```
 ### 函数的返回值
 * 如果在函数内部有return，就可以返回实际的值。如果函数没有返回值，那么返回的是None(空)
