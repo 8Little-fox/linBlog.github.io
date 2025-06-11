@@ -686,3 +686,193 @@ int main()
   return 0;
 }
 ```
+
+### 4.3 交换两个元素
+* 通过一个临时变量实现交换
+```c
+#include <iostream>
+using namespace std;
+int main() {
+  int arr[6] = {1,2,3,4,5,6};
+  int i,j; // 位置下标
+  int temp;
+  cin>> i >> j;
+  // 临时变量法
+  temp=arr[i];
+  arr[i] = arr[j];
+  arr[j] = temp;
+  // 输出
+  for (int j = 0; j <6; j++) {
+    cout << arr[j] << " ";
+}
+  return 0;
+}
+
+// 2 3
+// 1 2 4 3 5 6
+```
+
+### 4.4 插入一个值到指定位置
+* 1. 从插入位置开始，将后续元素逐个后移。
+* 2. 在目标位置赋值新元素。
+```c
+#include <iostream>
+using namespace std;
+int main() {
+    int arr[10] = {1, 2, 3, 4, 5}; // 预留空间
+    int length = 5;                // 实际长度
+    int pos, value; // 插入位置（从0开始）pos 需要插入的值 n
+    cin >> pos >> value;
+    // 元素后移
+    for (int i = length; i > pos; i--) {
+        arr[i] = arr[i-1];
+    }
+    // 插入新元素 , 长度会变长
+    arr[pos] = value;
+    length++;
+    // 输出数组
+    for (int i = 0; i < length; i++) {
+        cout << arr[i] << " ";
+    }
+    return 0;
+}
+// 3 99
+// 1 2 99 3 4 5
+```
+### 4.5 删除指定位置的值
+* 从删除位置开始，将后续元素逐个前移。
+* 减少数组实际长度。
+```c
+#include <iostream>
+using namespace std;
+int main() {
+  int arr[10] = {1, 2, 3, 4, 5}; // 预留空间
+  int length = 5;                // 实际长度
+  int pos; // 删除位置（从0开始）
+  cin>> pos;
+  // 元素前移
+  for (int i = pos; i < length -1; i++){
+    arr[i] = arr[i + 1];
+  }
+  length--; // 实际长度减1
+   // 输出数组
+   for (int i = 0; i < length; i++) {
+    cout << arr[i] << " ";
+}
+  return 0;
+}
+
+// 3
+// 1 2 3 5
+```
+### 4.6 循环移位（第一个元素移到最后，其他元素往前移）
+* 循环移位是将数组元素整体移动指定位置，末尾元素会 "循环" 到数组开头
+* 数组定义：使用 int a[] = {1, 2, 3, 4, 5}; 定义数组并初始化。
+* 临时变量：用 temp 存储 a[0] 的值。
+* 元素前移：通过 for 循环将数组从 a[1] 到 a[4] 的元素依次往前移动一位。
+* 放回末尾：将 temp 中存储的原 a[0] 的值放入 a[4]（数组最后一位）。
+* 输出结果：遍历数组，输出移位后的结果。
+
+```c
+#include <iostream>
+using namespace std;
+int main()
+{
+ int arr[] = {1, 2, 3, 4, 5};
+  // int length = sizeof(arr) / sizeof(arr[0]);// 计算数组长度
+  int length = 5; // 实际长度
+  // 1. 将 arr[0] 的值放入临时变量
+  int temp = arr[0];
+  // 2. 其他元素往前移
+  for (int i = 0; i < length - 1; i++){
+    arr[i] = arr[i + 1];
+  }
+  // 3. 临时变量的值放入 arr[5]
+  arr[length - 1] = temp;
+  // 输出数组
+  for (int i = 0; i < length; i++){
+    cout << arr[i] << " ";
+  }
+  return 0;
+}
+// 2 3 4 5 1 
+```
+
+### 4.7 纸杯猜数
+* 编写一个程序，模拟纸杯猜数的过程。纸杯数 n（1≤n≤50000），交换次数 m。
+* 【输入】第一行输入两个数 n、m，分别表示纸杯数、交换次数。
+* 第二行输入 n 个数，分别表示每个纸杯内侧的数字。之后 m 行，每行两个数 u、v，表示将这两个位置的纸杯交换。
+* 【输出】输出一行 n 个数，表示交换后每个纸杯内侧的数字依次是多少。以空格隔开。
+```c
+#include <iostream>
+using namespace std;
+
+int main() {
+  // n 个数 交换 m次   u、v，表示将这两个位置的纸杯交换。
+  int a[100] = {}, n , m , u ,v;
+  int temp;
+  cin>> n>>m; // 输入纸杯数n 交换次数 m
+  for (int i = 1; i <=n; i++){
+    cin>> a[i];
+  }
+  for (int i = 1; i <= m; i++){ //进行 m 次 交换
+    cin>> u >> v;
+    temp = a[u];
+    a[u] = a[v];
+    a[v] = temp;
+  }
+  for (int i = 1; i <= n; i++){
+    cout<< a[i]<< " ";
+  }
+  return 0;
+}
+
+// 5 2   5个数交换2次
+// 1 2 3 4 5  输入的5个数
+// 1 2   1 和 2 交换
+// 4 5   5 4 交换
+// 2 1 3 5 4  输出结果
+```
+
+### 4.8 排序算法
+* 常用的排序算法有`冒泡排序`、`选择排序`、`插入排序`、桶排序、归并排序、希尔排序、快速排序等。不同的排序算法适用于
+* 不同场景，各有特点。
+
+1. 冒泡排序
+
+* 冒泡排序是一种基础的基于`交换`的排序方法。
+* 思路是`相邻的元素两两比较`，较大的数下沉，较小的数冒起来，这样一趟比较下来，最大(小)值就会排列在一端。整个过程如同气泡
+冒起，因此被称作`冒泡排序`。
+![图片](../assets/imgs/maopao1.png)
+![图片](../assets/imgs/maopao2.png)
+![图片](../assets/imgs/maopao3.png)
+![图片](../assets/imgs/maopao4.png)
+![图片](../assets/imgs/maopao5.png)
+
+* n 个数进行冒泡排序需要进行几趟冒泡？答案是` n-1 次冒泡`。那么每
+* 次冒泡时，两两比较交换的下标范围有什么规律？从前面的 6 个数的冒泡排序数据中我们可
+* 以看出，`第 i 躺冒泡需要进行比较的下标 j 的范围是：0~数值长度-i-1`
+* `比较、交换相邻的元素` if(a[j] > a[j+ 1]) 交换 a[j] 和 a[j+1]
+
+```c
+#include <iostream>
+using namespace std;
+int main() {
+  int a[6] = {12, 4, 2, 7, 17, 0};
+  // int length = sizeof(a) / sizeof(a[0]);  // 计算数组长度
+  int length = 6;
+  for (int i = 1; i <= length-1; i++){
+    for (int j = 0; j <= length-i-1; j++){
+      if(a[j] > a[j+1]){
+        int temp = a[j];
+        a[j] = a[j+1];
+        a[j+1] = temp;
+      }
+    }
+  }
+  // 输出
+  for (int i = 1; i <= length; i++){
+    cout<< a[i]<< " ";
+  }
+}
+```
