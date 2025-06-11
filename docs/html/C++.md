@@ -854,25 +854,33 @@ int main() {
 * 以看出，`第 i 躺冒泡需要进行比较的下标 j 的范围是：0~数值长度-i-1`
 * `比较、交换相邻的元素` if(a[j] > a[j+ 1]) 交换 a[j] 和 a[j+1]
 
+* 从小到大：比较条件为 arr[j] > arr[j+1]。
+* 从大到小：比较条件为 arr[j] < arr[j+1]。
+
 ```c
 #include <iostream>
 using namespace std;
-int main() {
-  int a[6] = {12, 4, 2, 7, 17, 0};
-  // int length = sizeof(a) / sizeof(a[0]);  // 计算数组长度
-  int length = 6;
-  for (int i = 1; i <= length-1; i++){
-    for (int j = 0; j <= length-i-1; j++){
-      if(a[j] > a[j+1]){
-        int temp = a[j];
-        a[j] = a[j+1];
-        a[j+1] = temp;
+
+int main()
+{
+  int arr[] = {64, 34, 25, 12, 22, 11, 90};
+  int length = sizeof(arr) / sizeof(arr[0]); //计算数组长度
+  for (int i = 0; i < length - 1; i++){
+    for (int j = 0; j < length - i - 1; j++){
+      // 如果前一个元素大于后一个元素，则交换他们
+      if (arr[j] > arr[j + 1]){
+        // 交换 arr[j] 和 arr[j+1]
+        int temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
       }
     }
   }
-  // 输出
-  for (int i = 1; i <= length; i++){
-    cout<< a[i]<< " ";
+  cout << "从小到大排序结果：";
+  for (int i = 0; i < length; i++){
+    cout << arr[i] << " ";
   }
+  // 输出：11 12 22 25 34 64 90
+  return 0;
 }
 ```
