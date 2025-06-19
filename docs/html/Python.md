@@ -950,7 +950,7 @@ except IndexError as msg:
     print(msg)
 # list index out of range
 ```
-## 十.函数
+## 十.内置函数
 用法同上：⬆️
 内置函数： pow函数、abs函数、sum函数、round函数等
 
@@ -994,6 +994,8 @@ print(list_B) # [5,4,3,2]
 ```py
 print(ord('A')) # 65
 ```
+
+## 十一 高级函数
 ### 自定义函数
 函数的三大要素： 函数名， 参数， 函数体
 * def 函数关键字 
@@ -1077,3 +1079,327 @@ else:
 
 ### 函数的名称规范
 在编写自定义函数时，函数名字的命名最好见名知意，比如编写一个求和的自定义函数，可以命名为getSum，编写一个打印信息的自定义函数，可以命名为printInfo。
+
+### 函数的嵌套调用
+* 概念：在一个函数的内部，可以调用另一个函数
+
+* 找出1-n中所有的素数
+* 素数： 只有 1 和本身 两个因数的数字
+
+1. 判断某个数是否为素数
+```py
+def isPrime(x):
+    if x <= 1:
+        return 0  # 不是素数
+    for i in range(2, x):
+        if x % i == 0:
+            return 0
+    return 1
+```
+2. 找出 1 - n 中所有的素数
+```py
+n = int(input())
+
+
+def findPrime(n):
+    for i in range(1, n + 1):
+        t = isPrime(i)  # 判断 i是否为素数
+        if t == 1:  # i 为素数
+            print(i)
+
+
+# 调用函数，找出1-n当中所有的素数
+findPrime(n)
+```
+
+### 匿名函数 lambda
+* lambda 参数1,参数2,参数3:执行代码语句注意：参数不一定只有3个，可以是1-n个。
+* 利用`lambda创建一个匿名函数`，然后把这个匿名函数赋值给test变量，此时可以理解成test是这个函数的名字，可以通过变量去调用函数
+* x,y是形式参数，1、3和4、5是实际参数
+* x+y 是匿名函数的`执行表达式`，匿名函数被调用之后会将这个表达式的值进行返回
+> 注意：匿名函数冒号后面的表达式有且仅有一个。
+
+```py
+test = lambda x,y: x+ y
+print(test(1,3))
+print(test(4,5))
+```
+### 三元运算
+```py
+age = 20
+print('可以参军' if age>18 else '继续上学')
+```
+
+* 该匿名函数拥有2个形式参数，分别为x，y
+* 运算式所代表的意思为如果`x>y就返回x，否则就返回y`
+
+```py
+# 写法一
+greater = lambda x, y : x if x>y else y
+print(greater(3,5))
+print(greater(6,2))
+
+# 写法二
+print((lambda x, y : x if x> y else y)(3,5))
+print((lambda x, y : x if x> y else y)(6,2))
+```
+
+* 1、lambda的执行表达式`只能是单个表达式，不是一个代码块`。它的设计就是`为了满足简单函数的场景`，仅能封装有限的逻辑
+* 2、复杂的业务逻辑`必须使用def`来自定义函数
+
+### 函数递归
+* 递归函数概念：如果一个函数在内部不调用其它的函数，而是调用自己本身的话，这个函数就是`递归函数`
+>函数每调用自己一次，都会形成属于当前自己这一次函数调用的实际参数。以这个例子为例第一次调用函数时n为2，第二次调用函数时会形成一个新的n，这时n的值为1。这个 
+>时候有两个同名的n，但是它们存储的值却是不同的。
+
+```py
+def fun1(n):
+    if n == 1:
+        return 1
+    else:
+        return n + fun1(n-1)
+print(fun1(2))
+#3
+```
+
+### 全局变量与局部变量
+1. 局部变量
+* `局部变量`：函数`内部定义`的变量【作用域仅仅局限在函数内部】
+* 不同的函数可以定义同名的局部变量
+
+2. 全局变量
+* 全局变量：它的作用域是整个文件，作用域范围比局部变量更广
+* 当全局变量和局部变量重名的时候，`优先使用局部变量`
+* 如果在函数内部想要对全局变量进行修改的话，必须使用`global关键字`进行声明
+```py
+name = 'Tom'
+def changeGlobal():
+    global name
+    name = 'Jack'
+print(name)
+changeGlobal()
+# 查看全局变量是否被修改
+print(name)
+# Tom
+# Jack
+```
+
+* 写函数，找出传入的列表或元组的奇数位对应的元素，并返回一个新的列表
+```py
+def process_func(con):
+    listNew = []
+    index = 1
+    for i in con:
+        if i % 2 == 1:
+            listNew.append(i)
+        index+=1
+    return listNew
+
+result = process_func([1,2,3,4,5,6,7])
+print(result) 
+# [1, 3, 5, 7]
+```
+
+## 十二. 模块的定义
+* `模块就是一系列功能的结合体`，它类似于生活中的工具箱，模块中封装了许多的函数，这些函数我们可以直接拿来使用。
+* 模块可以分为三大类
+    * 内置模块 (用家里现有的工具箱，维修东西)
+    * 第三方模块 (去买一些工具箱回来，方便使用)
+    * 自定义模块 (自己做一些工具，然后把工具都放到工具箱里去)
+
+### math 数学运算
+* 比如我们已知一个内置模块的名字叫做`math`，这个模块提供了许多`数学运算的函数`。需要用`import这个关键字`来导入模块，才可以使用它
+* math模块提供了许多对浮点数的数学运算函数或者属性
+```py
+import math
+# gcd() 函数，求两个数的最大公约数
+x = math.gcd(12,8)
+print(x) #4
+
+# 圆周率π
+print(math.pi) # 3.141592653589793
+
+# ceil函数 返回大于或等于x的最小整数
+print(math.ceil(5.2)) # 6
+
+# floor函数 返回小于或等于x的最大整数
+print(math.ceil(5.2)) #6
+
+# pow函数 返回x的y次方
+print(math.pow(2,6)) #64.0
+```
+
+### time 日期
+
+```py
+import time
+print(time)
+
+# time(   )函数 返回从1970年1月1日0点整到现在过了多少秒
+print('当前时间距离1970年1月1日0点的秒数是：', time.time())
+# 当前时间距离1970年1月1日0点的秒数是： 1750297236.512476
+
+
+# localtime()函数来查看时间
+print('当前时间是：', time.localtime())
+# 当前时间是： time.struct_time(tm_year=2025, tm_mon=6, tm_mday=19, tm_hour=9, tm_min=40, tm_sec=36, tm_wday=3, tm_yday=170, tm_isdst=0)
+
+
+# asctime()函数可以获取字符串格式类型的时间
+print('当前时间是：', time.asctime())
+# 当前时间是： Thu Jun 19 09:42:02 2025
+
+
+# sleep(secVal)函数  可以暂停、延迟程序，参数secVal为暂停的秒数
+# 每隔 1 s 执行一次
+while True:
+    print(time.asctime())
+    time.sleep(1)
+```
+
+### calendar 日历
+
+* month(year,month)函数  可以打印某月的字符日历
+```py
+import calendar
+print(calendar.month(2023, 2))
+
+#    February 2023
+# Mo Tu We Th Fr Sa Su
+#        1  2  3  4  5
+#  6  7  8  9 10 11 12
+# 13 14 15 16 17 18 19
+# 20 21 22 23 24 25 26
+# 27 28
+
+```
+
+### fractions 分数计算
+```py
+import fractions
+
+# 使用fractions(分数)模块,可以进行分数运算
+numVal1 = fractions.Fraction(3,4)
+numVal2 = fractions.Fraction(2,3)
+print('相加', numVal1 + numVal2)
+print('相减', numVal1 - numVal2)
+print('相乘', numVal1 * numVal2)
+print('相除', numVal1 / numVal2)
+
+
+# 相加 17/12
+# 相减 1/12
+# 相乘 1/2
+# 相除 9/8
+
+
+
+# Fraction(  )函数还可以将小数转换为分数
+print('0.5的分数是：', fractions.Fraction(0.5))
+# 0.5的分数是： 1/2
+
+
+
+print('约分：', fractions.Fraction(5/20))
+# 0.5的分数是： 1/4
+```
+
+### datetime日期
+* datetime模块中封装了和日期、时间有关的函数和类
+
+#### date
+```py
+import datetime
+import time
+
+# today( )   生成当前日期
+d = datetime.date.today()
+print(d, type(d)) # 2025-06-19 <class 'datetime.date'>
+
+
+
+# fromtimestamp(时间戳)   时间戳转换成具体日期
+print(datetime.date.fromtimestamp(time.time())) # 2025-06-19
+
+
+# 最小日期
+print(datetime.date.min)
+# 最大日期
+print(datetime.date.max)
+# 表示日期的最小单位，这里是 1 天
+print(datetime.date.resolution)
+
+
+t = datetime.date.today()
+print(t, type(t)) # 2025-06-19 <class 'datetime.date'>
+print(t.year) # 2025
+print(t.month) # 6
+print(t.day) # 19
+
+
+# 自定义日期格式
+print(t.strftime("%Y年%m月%d日"))  # 2025年06月19日
+```
+
+#### time
+
+```py
+import datetime
+import time
+
+t = datetime.time(15,10,45,888888)
+print(t)
+# 15:10:45.888888
+
+# 输出标准的时间格式
+print(t.isoformat()) #15:10:45.888888
+
+# 自定义时间格式
+print(t.strftime("%H时%M分%S秒 %f微妙"))
+
+print(t.hour) 
+print(t.minute)
+print(t.second)
+print(t.microsecond)
+```
+
+#### datetime
+* today(  ) 获取当前的时间
+* now(  ) 获取指定时区的当前时间
+* utcnow() 获得utc时间，utc表示世界协调时间，北京时间 = UTC + 8:00
+
+```py
+import datetime
+# 生成日期时间
+dt = datetime.datetime(2025,6,19,17,29,45,888888)
+print(dt) #2025-06-19 17:29:45.888888
+
+
+
+dt = datetime.datetime.today()
+print(dt)
+
+# None 默认是你当前所在时区
+dt = datetime.datetime.now(tz=None)
+print(dt)
+
+
+# utc时间，UTC 表示世界协调时间，北京时间=UTC+ 8:00
+dt = datetime.datetime.utcnow()
+print(dt)
+
+
+```
+
+#### from……import……
+* `import 模块名` 用来导入某个模块中所有的方法和属性，在使用的时候必须在方法或者属性前面加上模块名,告诉python在该模块中寻找方法或者属性。
+* `from 模块名 import `模块中的函数或者属性 用来导入模块中某些具体的函数或者属性，不会将该模块所有的方法和属性导入，且调用这些方法或者属性时不需要加模块名加以限定。
+
+* `from …… import *`表示导入模块中的`所有内容`
+
+```py
+from math import sqrt
+# 只导入 math 模块中的 sqrt方法
+print(sqrt(64))
+# 64的平方根 8.0
+```
