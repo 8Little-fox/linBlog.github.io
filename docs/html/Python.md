@@ -1403,3 +1403,42 @@ from math import sqrt
 print(sqrt(64))
 # 64的平方根 8.0
 ```
+
+### random 随机数
+* random模块能够生成`随机数`,随机生成一个0-1之间的浮点数
+
+```py
+import  random
+x = random.random()
+print(x, type(x))
+
+# randint(start,stop)
+# 随机生成一个start和stop之间的整数，包含start和stop
+x = random.randint(1,5)
+print(x)
+
+# randrange(start,stop,step)
+# 随机生成一个start和stop之间的整数；只包含start，不包含stop；从start开始以step为单位递增
+# x只能在1、3、5、7、9这几个数中间取值
+
+x = random.randrange(1,10,2)
+print(x)
+
+
+# choice(sequence)
+# 从一个序列中随机选择一个元素，这个序列可以是字符串、列表、元组等等，不能是字典、集合
+x = random.choice('hello')
+print(x)
+
+tuple_value = (1,2,3,4,5)
+y = random.choice(tuple_value)
+print(y)
+
+# shuffle(sequence)
+# 功能：随机打乱列表的顺序，原列表发生变化，说明sequence是可变数据类型，只能是列表，字典是无序的，无法使用shuffle函数
+z = [1,3,5,7,9]
+x = random.shuffle(z)
+print(x) #None
+print(z) #随机 [7, 3, 5, 9, 1]
+
+```
