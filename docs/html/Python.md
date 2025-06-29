@@ -223,7 +223,7 @@ print(fruits[0])        # 访问元素
 print(len(fruits))      # 长度
 ```
 
-## 三.海龟画图
+## 三.GUI库 图形用户界面
 ### 3.1 turtle
 ```py
 import turtle  # 导入turtle 库
@@ -325,6 +325,36 @@ done()
 ![图片](../assets/imgs/turtle2.png)
 ![图片](../assets/imgs/turtle3.png)
 ![图片](../assets/imgs/turtle4.png)
+
+
+
+### tkinter模块
+* tkinter 是 Python 标准的GUI库，简称 "tk"，是Python自带的标准库，因此无须另行安装。
+* tkinter编写的程序，也称为GUI程序。`GUI指的是“图形用户界面”`，它是计算机图形学(GC)的一门分支，主要研* 究如何在计算机中表示图形，以及利用计算机进行图形的计算、处理和显示等相关工作。
+
+* tk.Label() 函数可以在画布上添加一个文本标签
+```py
+import tkinter as tk
+
+# 创建一个主窗口对象
+window = tk.Tk()
+# 主窗口标题
+window.title('计算器')
+
+# geometry函数可以用来设置主窗口的大小，
+window.geometry("300x300")
+
+l = tk.Label(window, text='请输入姓名',width=30,height=2)
+l.pack()
+# 指定文本框内容以何种样式的字符显示，比如密码 可以设置 show="*"
+e = tk.Entry(window, show=None)
+# 让输入框一直显示
+e.pack()
+
+# 显示主窗口 mainloop函数是用来设置窗口主循环的，使窗口循环显示（一直显示，直到窗口被关闭）
+window.mainloop()
+```
+![图片](../assets/imgs/tk_1.png)
 
 ## 四.数学算法
 ### 4.1 次方 pow()
