@@ -1081,3 +1081,127 @@ char s2[4][3] = {'a','b', 'c', 'd' };
 char s2[4][3] = {"a","b","c","d" };
 
 ```
+
+### 6.2 输入 getline(变量名，长度)
+* 用 cin 从键盘输入一串字符时，字符中`不能有空格`，若有空格则`只读入第一个空格之前的内容`。
+
+* 用 `cin.getline` 函数输入带空格字符串 `cin.getline( 字符数组 s, 数组长度 N )`，`第一个参数是放入字符串的字符数组`，`第二个参数是这个字符数组的长度`。用这个函数可以一次性读入一行字符串，遇到换行符’\n’或者这个字符数组放满时结束读入。
+* `允许字符串中出现空格`。
+* `puts(char *s)`是默认的 c++函数，输出字符数组的内容，并换行
+```c
+#include <iostream>
+using namespace std;
+int main() {
+  char s[20];
+  cin>> s; // Hello World
+  cout<< s << endl; // Hello
+
+  cin.getline(s, 20); // Hello World
+  puts(s); // Hello
+  return 0;
+}
+```
+
+### 6.3 strlen()获取字符数组有效长度 
+* 存放在字符数组中的字符串的长度和数组长度是不一样的，比如char s[10]=”ab d”;字符串的长度是 4，数组长度是 10
+* C++提供 `strlen(char *s)返回字符串长度`，这个长度`不包含结束符'\0'`。比如以下代码：strlen(s)返回的是 4，而不是 10。【注意】使用 strlen()函数需要`#include<cstring>`。
+```c
+#include <iostream>
+#include <cstring> // For strlen function
+using namespace std;
+int main() {
+  char s[10] = "ab c";
+  cout<< strlen(s) << endl; // Output the length of the string
+  return 0;
+}
+```
+
+### 6.4 strcmp()函数比较两个字符数组
+* 对两个字符串进行大小比较也是常用功能。C++提供了 strcmp()函数，可以比较两个字符数组中的字符串的大小。
+* `#include<cstring>`
+
+```c
+#include<iostream>
+using namespace std;
+int main() {
+  char s1[10]={};
+  char s2[10]={};
+  cin>> s1 >> s2; // 输入两个字符串
+  int k = strcmp(s1, s2); // 使用strcmp函数比较两个字符串
+  if (k == 0) {
+    cout<< "相等" << endl; // 如果相等，输出"相等"
+  } else if (k > 0) {
+    cout<< "s1大于s2" << endl; // 如果s1大于s2，输出"s1大于s2"
+  } else {
+    cout<< "s1小于s2" << endl; // 如果s1小于s2，输出"s1小于s2"    
+  }
+  return 0 ;
+}
+```
+
+### 6.5 数组字符串循环
+例题：输入一个字符串，表示一条 DNA 序列。这个字符串只含有大写字母A、T、 G、 C ，分别表示腺瞟呤、胸腺嘧啶、鸟嘌呤和胞嘧啶。字符串长度不超过255。配对规律是固定的，即是：A-T,C-G。
+
+【输入】一行，只含有大写字母 A、T、 G、 C 的字符串，长度不超过255。
+
+【输出】一行，与输入字符串按照 DNA 配对规律互补的字符串
+* 【输入样例】ATTCGGTCAGTTGACC
+* 【输出样例】TAAGCCAGTCAACTGG
+
+```c
+#include <iostream>
+#include <cstring> // For strcmp function
+using namespace std;
+int main() {
+  char s[256] = {};
+  int len = 0;
+  // 多留一个位置给 结束符 '\0'
+  cin.getline(s, 256);
+  len = strlen(s); // 计算字符串长度
+  for (int i = 0; i < len; i++) {
+    if(s[i] == 'A'){
+      cout<< "T";
+    }
+    else if(s[i] == 'T'){
+      cout<< "A";
+    }
+    else if(s[i] == 'C'){
+      cout<< "G";
+    }
+    else if(s[i] == 'G'){
+      cout<< "C";
+    }
+    else{
+      cout<< s[i]; // 如果不是A、T、C、G，则直接输出原字符
+    }
+  }
+  cout << endl; // 输出换行符
+  return 0;
+}
+// ATTCGGTCAGTTGACC
+// TAAGCCAGTCAACTGG
+// 该程序读取一个DNA序列字符串，替换其中的A、T、C、G字符为其互补字符，并输出结果。
+// 该代码假设输入的字符串长度不超过255个字符，并且只包含A、T、C、G和其他字符。    
+```
+
+## 七 进制
+*  进制，也叫进位制，就是一种数数或者记数方法
+* `十进制`的计数规律是`逢十进一` 十进制数 是 `1 和 0 `拼凑来的，这个 10就是 9 满十进一，进位来的，个位上的 9 变为 0，向十位进一，成为 10。
+* `二进制` 发现者是德国数学家`莱布尼茨`现代的计算机，就是使用二进制控制计算机内部微小部件（晶体管）的开关。0 和 1 对应晶体管的开和关。
+所以二进制是计算机能懂的计数方式。
+
+![alt text](../assets/imgs/jinzhi2.png)
+![alt text](../assets/imgs/jinzhi3.png)
+![alt text](../assets/imgs/jinzhi4.png)
+
+* `16 进制`中，每一位是用` 0~15` 来表示，但为了形式整洁，从 10 开始用字母 A 表示，即 10(A)，
+11(B)，12(C)，13(D)，14(E)，15(F)。
+### 二进制转十进制
+![alt text](../assets/imgs/jinzhi5.png)
+
+### 八进制转十进制
+![alt text](../assets/imgs/jinzhi6.png)
+### 十六进制转十进制
+![alt text](../assets/imgs/jinzhi7.png)
+
+![alt text](../assets/imgs/jinzhi8.png)
