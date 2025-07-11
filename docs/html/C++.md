@@ -1205,3 +1205,131 @@ int main() {
 ![alt text](../assets/imgs/jinzhi7.png)
 
 ![alt text](../assets/imgs/jinzhi8.png)
+
+### 十进制数转 非十进制数
+![alt text](../assets/imgs/jinzhi9.png)
+![alt text](../assets/imgs/jinzhi10.png)
+![alt text](../assets/imgs/jinzhi11.png)
+![alt text](../assets/imgs/jinzhi12.png)
+
+### 二进制和八进制、十六进制之间的转换
+当把二进制数转换为八进制数或十六进制数时，可以先把二进制数转换为十进制数，然
+后再把这个十进制数转换为八进制数或十六进制数；反过来，八进制数或十六进制数转换为
+二进制数时，则先把它转化为十进制数，再把这个十进制数转换为二进制数；八进制数与十
+六进制数之间的相互转换也是如此。
+![alt text](../assets/imgs/jinzhi13.png)
+![alt text](../assets/imgs/jinzhi14.png)
+![alt text](../assets/imgs/jinzhi15.png)
+
+### 八进制数和十六进制数之间的转换
+![alt text](../assets/imgs/jinzhi16.png)
+
+### 举个🌰
+### 十进制数->二进制数的
+
+* 方法是“除以 2 取余倒着读”：
+1. 十进制数除以 2，运算保留余数，得到的商继续除以 2，直至商为 
+2. 所有的余数倒序输出即为二进制数
+
+* 【编程挑战 】输入一个不大于 32767 的整数 n，将它转换成一个二进制数。
+* 【输入】输入只有一行，包括一个整数 n(0<=n<=32767)
+* 【输出】输出只有一行
+* 【输入样例】100
+* 【输出样例】1100100
+
+方法一： do while
+```c
+#include <iostream>
+using namespace std;
+int main() {
+  int n, cnt = 0;
+  int b[20] = {0};
+  cin >> n;
+  cnt = 0;
+  do{
+    b[cnt] = n % 2; // 除以2 取余数
+    cout<< b[cnt] << endl;
+    cnt ++; //余数个数计数
+    n = n / 2; //除以2的到商
+  } while (n != 0);
+  for (int i = cnt-1; i >=0; i--){
+    cout<< b[i];
+  }
+  return 0;
+}
+
+//输入 10
+// 0
+// 1
+// 0
+// 1
+// 1010
+```
+
+方法二 while循环
+```c
+#include <iostream>
+using namespace std;
+int main() {
+  int n, cnt = 0;
+  int b[20] = {0};
+  cin >> n;
+  // while 循环是 先判断后循环，n为0时 不会进入循环，所以需要先单独处理 n 为 0 的情况
+  if(n == 0){
+    cout<< 0;
+    return 0;
+  }
+  cnt = 0;
+  while (n !=0){
+    b[cnt] = n %2;
+    cnt++;
+    n= n /2;
+  }
+  
+  for (int i = cnt-1; i >=0; i--){
+    cout<< b[i];
+  }
+  return 0;
+}
+```
+### 八进制数->十进制数
+* 按权展开求和法
+对于八进制数，第 i 位的权重就是 8i，编号 i 从个位起往左，依
+次为 0，1，2
+
+* 【编程挑战 】请将一个 20 位以内的八进制整数转换为十进制整数。
+* 【输入】一行，20 位以内的八进制整数
+* 【输出】该数对应的十进制数
+* 【输入样例 1】23507
+* 【输入样例 2】77777777777777777777
+* 【输出样例 1】10055
+* 【输出样例 2】1152921504606846975
+
+```c
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main() {
+  // 放八进制数的字符串
+  char x[20] = {0};
+  int len;
+  long long ans = 1, sum = 0; // int 类型会有内存溢出风险
+  cin>> x;
+  len = strlen(x); // 获取有效长度
+  ans = 1;
+  //从第0位开始 按权展开求和
+  // 对应到数组就是进行逆序遍历
+  for (int k = len-1; k >= 0; k--){
+    sum = sum + (x[k] - '0') * ans;
+    ans *=8;
+  }
+  cout<< sum;
+  return 0;
+}
+```
+【注意】
+1. 使用 strlen()需要#include<cstring>。
+2. 累乘变量 ans 的初始值为 1。
+3. 累加变量 sum 的初始值为 0。
+4. 对字符数组的有效内容进行逆序遍历。
+5. 用累乘模拟权重 8i 的计算。
