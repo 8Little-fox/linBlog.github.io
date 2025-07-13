@@ -1184,6 +1184,32 @@ int main() {
 // 该代码假设输入的字符串长度不超过255个字符，并且只包含A、T、C、G和其他字符。    
 ```
 
+### 6.6 统计单词长度
+![alt text](../assets/imgs/char-arr.png)
+
+```c
+#include <iostream>
+using namespace std;
+int main() {
+  char s[1001];
+  int len,sum = 0;
+  cin.getline(s, 1001);
+  len = strlen(s);
+  for (int i = 0; i < len; i++){
+    if(s[i] != ' ') {
+      sum ++;
+    }else {
+      if(sum >0) {
+        cout<< sum << ',';
+      }else {
+        sum = 0;
+      }
+    }
+  }
+  cout << sum << endl;
+  return 0;
+}
+```
 ## 七 进制
 *  进制，也叫进位制，就是一种数数或者记数方法
 * `十进制`的计数规律是`逢十进一` 十进制数 是 `1 和 0 `拼凑来的，这个 10就是 9 满十进一，进位来的，个位上的 9 变为 0，向十位进一，成为 10。
