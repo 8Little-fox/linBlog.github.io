@@ -1201,9 +1201,8 @@ int main() {
     }else {
       if(sum >0) {
         cout<< sum << ',';
-      }else {
-        sum = 0;
       }
+      sum = 0;
     }
   }
   cout << sum << endl;
