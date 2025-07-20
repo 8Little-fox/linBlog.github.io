@@ -1417,4 +1417,97 @@ int main() {
 
 ![alt text](../assets/imgs/fanma12.png)
 
+### 位逻辑运算符
 ![alt text](../assets/imgs/fanma13.png)
+![alt text](../assets/imgs/weiyuns.png)
+![alt text](../assets/imgs/weiyuns2.png)
+
+![alt text](../assets/imgs/weiyuns9.png)
+![alt text](../assets/imgs/weiyuns8.png)
+![alt text](../assets/imgs/weiyuns7.png)
+![alt text](../assets/imgs/weiyuns6.png)
+### 位移运算符
+* 左移
+![alt text](../assets/imgs/weiyuns10.png)
+![alt text](../assets/imgs/weiyuns11.png)
+* 右移
+![alt text](../assets/imgs/weiyuns12.png)
+![alt text](../assets/imgs/weiyuns5.png)
+
+![alt text](../assets/imgs/weiyuns13.png)
+
+### 位运算符优先级
+![alt text](../assets/imgs/weiyuns14.png)
+
+### 🌰
+* 输入一个不大于 32767 的正整数 n，输出这个数的二进制形式中各位上有几个 1。(用位运算实现)
+* 【输入】输入只有一行，包括一个整数 n(0<=n<=32767)
+* 【输出】输出只有一行
+* 【输入样例】32760
+* 【输出样例】12
+* 方法一 对标志变量进行循环左移，数不变
+![alt text](../assets/imgs/weiyuns15.png)
+
+```c
+#include <iostream>
+using namespace std;
+int main() {
+  int n = 0,num; // num 输入的数
+  unsigned int flag = 1;
+  cin>> num;
+  // flag 标志变量
+  while (flag){
+    if((num & flag) > 0) {
+      n++;
+    }
+    flag = flag << 1;
+  }
+  cout<< n;
+  return 0 ;
+}
+```
+
+* 方法二
+* 对数进行循环右移，flag 不变，每次判断最低位是否为1。
+```c
+#include <iostream>
+using namespace std;
+int main() {
+  int n = 0,num; // num 输入的数
+  unsigned int flag = 1;
+  cin>> num;
+  while (num){
+    // 判断数的最低位 是否是1
+    if((num & flag) > 0) {
+      n++;
+    }
+    // 将数继续右移一位
+    num = num >> 1;
+  }
+  cout<< n;
+  return 0 ;
+}
+```
+【注意】对数进行循环右移进而统计 1 的个数的方法只适合正整数，不适合负整数。因为对负数进行右移时，高位补符号位的值，也就是每次补一个 1，这样每右移一次都增加一个 1，导致 1 的统计结果不正确。
+
+* 输出二进制补码
+```c
+#include <iostream>
+#include <cstdio>
+using namespace std;
+int main() {
+  int num;
+  cin>> num;
+  //依次从二进制最高位检查二进制数中每一位的值
+  for (int i = 32; i >= 0; i--){
+    if((num & (1 << i)) != 0) {
+      printf("1");
+    }else {
+      printf("0");
+    }
+  }
+  
+
+  return 0 ;
+}
+```
