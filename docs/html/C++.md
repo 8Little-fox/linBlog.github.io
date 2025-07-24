@@ -1511,3 +1511,186 @@ int main() {
   return 0 ;
 }
 ```
+
+## 九 函数
+
+### 主函数
+
+* int 表示主函数的返回值类型是整型
+* main 是函数的名字，函数名后跟一对()小括号
+*  { }大括号内是函数的内容,return 0 语句返回 0 给系统，表示程序运行成功
+```c
+#include <iostream>
+using namespace std;
+int main() {
+  return 0
+}
+```
+
+![alt text](../assets/imgs/fun1.png)
+### 系统函数
+* C++提供的函数，头文件 `#include <cmath>`
+* `Cmath` 头文件类比是一个包含常用`数学工具`的工具箱
+* ceil() 向上取整
+### 自定义函数
+![alt text](../assets/imgs/fun2.png)
+
+```c
+#include <iostream>
+using namespace std;
+// 函数的功能只有通过调用才会被执行
+int add(int a, int b){
+  // 若没有返回值，返回值类型为 void (关键字)
+  // 若有，返回值只能有一个，类型可以为 char, int, float, double ....
+  return a +b;
+}
+int main(){
+  cout<< add(1, 2);
+  return 0;
+}
+```
+
+1) 一个 C++程序可以包含多个函数；
+2) 有且只有一个 main()函数；
+3) 程序总是从 main()开始执行；
+4) main()可以调用其它函数；
+5) 其它函数也可以互相调用；
+6) 其它函数不能调用 main()函数；
+
+### 形参、实参以及“值传递”
+![alt text](../assets/imgs/fun3.png)
+![alt text](../assets/imgs/fun4.png)
+
+* 函数调用 需 `先定义，后调用`, 或者` 先声明，在调用，最后定义`
+![alt text](../assets/imgs/fun5.png)
+
+![alt text](../assets/imgs/fun6.png)
+
+```c
+#include <iostream>
+using namespace std;
+
+char Fun(char ch){
+  char num = ch + 2;
+  return num;
+}
+// char - int 类型转换， 返回的是 ASCII 的值 d 的值是 100
+int Fun2(char ch){
+  char num = ch + 2;
+  // 100
+  return num;
+}
+int main(){
+  // c 实参，等于把c 的值传给函数的形参
+  char c = 'b';
+  cout<< Fun(c);
+  return 0;
+}
+
+// d 
+```
+
+### 作用域
+![alt text](../assets/imgs/fun7.png)
+
+![alt text](../assets/imgs/fun8.png)
+
+![alt text](../assets/imgs/fun9.png)
+
+### 输出字符三角形
+```c
+#include <iostream>
+using namespace std;
+
+char c; // 字符
+void row(int n) {
+  for (int i = 1; i <= n; i++){
+    cout<< c;
+  }
+  cout<< endl;
+}
+int main(){
+  int num ; // 行数
+  cin>> num >> c;
+  for (int i = 1; i <= num; i++){
+    row(i);
+  }
+  return 0;
+}
+```
+
+
+### 求丑数
+我们把只包含质因子 2、3 和 5 的正整数称为丑数（Humble Number）。
+例如 6、8 都是丑数，但 14 不是，因为它包含因子 7。要求定义一个判断丑数的函数，利用
+它输出 1∼100 之间所有的丑数
+* 【输入】无
+* 【输出】1 2 3 4 5 6 8 9 10 12 15 16 18 20 24 25 27 30 32 36 40 45 48 50 54 60 64 72 75
+80 81 90 96 100
+
+![alt text](../assets/imgs/fun10.png)
+![alt text](../assets/imgs/fun11.png)
+![alt text](../assets/imgs/fun13.png)
+
+```c
+#include <iostream>
+using namespace std;
+bool isHumbleNumber(int number) {
+  while (number %2 == 0){
+    number /=2; // --> number=number/2
+  }
+  while (number %3 == 0){
+    number /=3;
+  }
+  while (number %5 == 0){
+    number /=5;
+  }
+  if(number == 1) {
+    return true;
+  }else {
+    return false;
+  }
+  
+}
+int main() {
+  for (int i = 1; i <= 100; i++){
+    if(isHumbleNumber(i)){
+      cout<< i << " ";
+    }
+  }
+  return 0;
+}
+```
+
+### 求完整数
+
+![alt text](../assets/imgs/fun14.png)
+```c
+#include <iostream>
+using namespace std;
+// 自定义函数，判断number是否是一个完整数
+bool IsPerfectNumber(int number) {
+  int sum = 0;
+  for (int i = 1; i < number; i++){
+    if(number % i ==0 ) {
+      sum+=i;
+    }
+  }
+  // 判断和是否等于原数
+  if (number == sum){
+    return true;
+  }else {
+    return false;
+  }
+}
+int main() {
+  int n;
+  cin>> n;
+  for (int i = 2; i <= n; i++){
+    if(IsPerfectNumber(i)){
+      cout<< i << endl;
+    }
+  }
+  return 0;
+}
+```
