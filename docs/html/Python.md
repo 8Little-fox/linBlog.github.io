@@ -225,6 +225,7 @@ print(len(fruits))      # 长度
 
 ## 三.GUI库 图形用户界面
 ### 3.1 turtle
+* 画笔默认向右转
 ```py
 import turtle  # 导入turtle 库
 # 设置画笔形状为小海龟 arrow，circle，square，triangle，classic
@@ -248,7 +249,7 @@ turtle.clear()  # 清除画布内容（保留画笔状态）
 turtle.ht()  # 函数隐藏画笔图标
 turtle.st()  # 显示画笔图标
 turtle.bgcolor()  # 改变背景颜色
-turtle.circle()  # 画圆（备课请看批注）
+turtle.circle()  # 画圆（备课请看批注） 参数顺序为（半径，角度,线段数量）
 turtle.dot()  # 画点
 turtle.pensize(15) #设定画笔粗细
 turtle.pencolor("yellow")#设置画笔的颜色

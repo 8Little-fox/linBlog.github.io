@@ -1694,3 +1694,194 @@ int main() {
   return 0;
 }
 ```
+
+## 十 递归函数
+* 函数直接或间接地调用自身，称为`递归调用`
+* 直接调用自己称为`直接递归`。A 调用 B ，B 又调用 A 的递归叫做`间接递归`。
+
+递归函数有两个必要组成部分：
+1) 有一个明确的递归结束条件，即递归出口；
+2) 函数调用自身；
+![alt text](../assets/imgs/dg1.png)
+
+![alt text](../assets/imgs/dg2.png)
+
+* 递归举个例子
+阶乘是数学中的一个名词。阶乘(factorial)的定义： 一个正整数的阶乘是所有小于及等
+于该数的正整数的积：
+* n! = n * (n-1) * (n-2) *... * 2 * 1
+* 例如，6! = 6 * 5 * 4 * 3 * 2 * 1 = 720
+我们先看看能不能找到递归规律，也就是能不能把大问题分解为相似的小问题。以 6！
+为例，6！= 6 * 5 * 4 * 3 * 2 * 1 = 6 * 5！，问题的规模变小了，只需要解决 5！就可以了。
+一次类推 5! = 5*4!，4!=4*3! ...... 1!=1。
+所以 n!的递归规律或者递归公式是 n！=n*（n-1）！
+
+![alt text](../assets/imgs/dg3.png)
+
+![alt text](../assets/imgs/dg4.png)
+
+### 汉诺塔
+【编程挑战 】输入汉诺塔层数 n，输出移动步骤。汉诺塔的算法思路：
+如果只有一个圆盘，则把该圆盘从 A 柱到 C 柱，结束。
+如果有 n 个圆盘，则把前 n-1 个圆盘移动到 B，然后把自己移动到 C，最后再把前 n-1
+个移动到 C。
+* 【输入】一个整数 n，表示 A 柱上有 n 个圆盘（0<n<=10）
+* 【输出】若干行，一行是一次移动步骤
+* 【输入样例】3 
+* 【输出样例】
+
+  A To C
+
+  A To B
+
+  C To B
+
+  A To C
+
+  B To A
+
+  B To C
+
+  A To C
+```c
+#include <iostream>
+using namespace std;
+
+
+/**
+ * 汉诺塔问题的递归解法
+ * @param n 汉诺塔的层数
+ * @param a 起始柱子
+ * @param b 辅助柱子
+ * @param c 目标柱子
+ */
+void hanoi(int n, char a, char b, char c) {
+  // 递归出口
+  if (n == 1) {
+    printf("%c TO %c\n", a, c);
+  } else {
+    hanoi(n - 1, a, c, b);
+    // 将 A 上遗留的最后一个圆盘移动到C
+    printf("%c TO %c\n", a, c);
+    // 将 B 上 n-1层的圆盘移动到 C
+    //此时 B为起始柱，C 为目标柱，A为辅助柱
+    hanoi(n - 1, b, a, c);
+  }
+}
+int main() {
+  int n;
+  printf("请输入汉诺塔的层数：");
+  scanf("%d", &n);
+  hanoi(n, 'A', 'B', 'C');
+  return 0;
+}
+```
+
+### 斐波那契数列
+`斐波那契数列`（Fibonacci）是指这样的数列：1，1，2，3，5，8，13……这个数列的第
+一个和第二个数都为 1，接下来每个数都等于前面 2 个数之和。
+* 【编程挑战 】输入正整数 n，输出斐波那契数列第 n 项
+* 【输入】一个正整数 n，表示第 n 项
+* 【输出】第 n 项是多少
+* 【输入样例】4
+* 【输出样例】3
+
+![alt text](../assets/imgs/dg5.png)
+```c
+#include <iostream>
+using namespace std;
+int fibo(int n){
+  if( n <=2) {
+    return 1; // 递归出口
+  } else {
+    return fibo(n - 1) + fibo(n - 2); // 递归调用
+  }
+}
+int main(){
+  int x;
+  cin>> x;
+  cout<< fibo(x) << endl; // 输出斐波那契数列的第 x 项
+  return 0;
+}
+```
+
+### 输出字符三角形（递归）
+![alt text](../assets/imgs/dg6.png)
+
+```c
+#include <iostream>
+using namespace std;
+
+void draw(int n){
+  if(n==1) {
+    cout<< "*"<<endl;
+  }else {
+    draw(n - 1);
+    for(int i = 0; i < n; i++){
+      cout<< "*"; 
+    }
+    cout<< endl;
+  }
+}
+int main(){
+  int x;
+  cin>> x;
+  draw(x);
+  return 0;
+}
+```
+### 递归求和
+用递归的方法求 1+2+3+……+N 的值
+```c
+#include <iostream>
+using namespace std;
+/**
+ * 求和函数的递归实现
+ * @param n 需要求和的数字
+ * @return 返回从1到n的和
+ */
+int sum(int n) {
+  if (n == 1) {
+    return 1; // 递归出口
+  } else {
+    return n + sum(n - 1); // 递归调用
+  }
+}
+int main() {
+  int n;
+  cin >> n; 
+  cout << sum(n) << endl; // 输出从1到n的和
+  return 0;
+}
+```
+
+### 爬楼梯问题
+【编程挑战 】有个小孩正在上楼梯，楼梯有 n 阶台阶，小孩一次可以上 1 阶或 2 阶。
+输入楼梯的总级数，求有小孩有多少种不同的走楼梯方式。
+* 【输入】一个整数 n 代表楼梯总级数(1≤n≤30)
+* 【输出】不同的楼梯走法数
+* 输入 5 
+* 输出 8
+![alt text](../assets/imgs/dg7.png)
+![alt text](../assets/imgs/dg8.png)
+![alt text](../assets/imgs/dg9.png)
+![alt text](../assets/imgs/dg10.png)
+```c
+#include <iostream>
+using namespace std;
+int F(int n) {
+  if(n==1){
+    return 1; // 递归出口
+  } else if(n==2){
+    return 2; // 递归出口
+  } else {
+    return F(n - 1) + F(n - 2); // 递归调用
+  }
+}
+int main(){
+  int x;
+  cin>> x;
+  cout<< F(x) << endl;
+  return 0;
+}
+```
