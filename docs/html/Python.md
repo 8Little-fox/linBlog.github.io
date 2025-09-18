@@ -257,6 +257,7 @@ turtle.fillcolor()#填充颜色
 turtle.color()#设置画笔颜色和填充颜色
 turtle.begin_fill()#开始填充颜色
 turtle.end_fill()#结束填充颜色
+turtle.hideturtle() # 隐藏
 turtle.done() # 结束
 ```
 ### 3.2 奥运五环
