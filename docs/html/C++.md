@@ -1999,7 +1999,7 @@ int main() {
 }
 ```
 
-## 指针与数组
+## 十二 指针与数组
 ![alt text](../assets/imgs/zhizhen14.png)
 ![alt text](../assets/imgs/zhizhen15.png)
 
@@ -2143,4 +2143,122 @@ int main() {
   return 0;
 }
 ```
-> strlen(char *s)返回字符串长度（不包含'\0'）。使用这个函数需要#include<cstring> 
+> `strlen(char *s)`返回字符串长度（不包含'\0'）。使用这个函数需要`#include<cstring> `
+
+## 十三 结构体
+### 定义结构体
+* 在定义结构体时，系统对其不分配实际内存。只有声明结构体变量时，系统才为其分配内存。
+![alt text](../assets/imgs/jgt.png)
+![alt text](../assets/imgs/jgt2.png)
+
+![alt text](../assets/imgs/jgt3.png)
+![alt text](../assets/imgs/jgt4.png)
+### 结构体的内存模型
+结构体变量的成员占用相邻的内存单元。num 是第一个成员，内存中也是占用第一
+块内存，以此类推。结构体变量占有内存的大小是里面成员的内存大小相加。num 是 int
+类型，占用 4 字节；name 是 20 个字符的数组，占用 20 个字节；所以结构体变量 st1 的
+大小是 24 个字节。
+```c
+struct Student{
+  int num;
+  char name[20];
+}
+Student st1 = {18, "LinLin"}
+```
+
+### 访问结构体成员
+C++规定，结构体变量中各个成员的访问形式为: `结构体变量名.成员名`。. 是成员选
+择运算符，它在所有的运算符中优先级最高。如下代码，可以通过结构体变量名.成员名
+对结构体变量的成员进行`读取`和`赋值`。
+![alt text](../assets/imgs/jgt5.png)
+
+也可以配合取地址运算符和 sizeof 函数查看成员的内存地址，以及内存大小。
+![alt text](../assets/imgs/jgt6.png)
+
+### 结构体数组
+* 声明了一个长度为 4 的 Student 结构体数组 group1，声明的同时对数组元素进行了初始化：
+![alt text](../assets/imgs/jgt7.png)
+
+结构体数组的每个元素都是一个结构体类型的数据。每个元
+素都包含结构体的全部成员。Group1 相当于记录 4 个学生的信息，这些信息在内存中是`连续存放的`。
+结构体数组的使用就和普通的数组一样。
+
+![alt text](../assets/imgs/jgt8.png)
+
+### 结构体指针
+![alt text](../assets/imgs/jgt9.png)
+![alt text](../assets/imgs/jgt10.png)
+### 结构体指针访问成员的方式 
+`结构体指针名->成员名`
+![alt text](../assets/imgs/jgt11.png)
+
+![alt text](../assets/imgs/jgt12.png)
+
+### 🌰 甲流病人初筛
+![alt text](../assets/imgs/jgt13.png)
+![alt text](../assets/imgs/jgt14.png)
+
+![alt text](../assets/imgs/jgt15.png)
+```c
+#include <iostream>
+using namespace std;
+struct Patient{
+  char name[10];
+  float temperature;
+  bool cough;
+}a[200];
+int main(){
+  int n, t=0; // n总人数，t甲流人数
+  cin>> n;
+  for (int i = 0; i < n; i++){
+    cin>> a[i].name >> a[i].temperature >>a[i].cough;
+  }
+  for (int i = 0; i < n; i++){
+    if(a[i].temperature >=37.5 && a[i].cough){
+      cout<< a[i].name<<endl;
+      t++;
+    }
+  }
+  cout<< t<<endl;
+  return 0;
+}
+```
+![alt text](../assets/imgs/jgt16.png)
+
+### 🌰总分最高的学生
+![alt text](../assets/imgs/jgt17.png)
+![alt text](../assets/imgs/jgt18.png)
+```c
+#include <iostream>
+using namespace std;
+struct Student{
+  int stuNum;
+  char name[21];
+  int chinese;
+  int math;
+  int english;
+};
+int main(){
+  Student a[3];
+  // 输入
+  for (int i = 0; i < 3; i++){
+    cin>> a[i].stuNum >> a[i].name >>a[i].chinese >>a[i].math >>a[i].english;
+  }
+  int max_t = 0; //最高总分
+  int max_i = 0; //最高总分同学的下标
+  for (int i = 0; i < 3; i++){
+    int total = a[i].chinese + a[i].math +a[i].english;
+    if(total > max_t){
+      max_t = total;
+      max_i = i;
+    }
+  }
+  cout<< "学号："<< a[max_i].stuNum <<endl;
+  cout<< "姓名："<< a[max_i].name <<endl;
+  printf("三门课成绩： %d %d %d\n",a[max_i].chinese, a[max_i].math, a[max_i].english);
+  printf("平均分： %.1f\n",max_t/3.0);
+  return 0;
+}
+```
+
+![alt text](../assets/imgs/jgt19.png)
