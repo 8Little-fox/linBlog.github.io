@@ -2262,3 +2262,370 @@ int main(){
 ```
 
 ![alt text](../assets/imgs/jgt19.png)
+
+## 十四 结构体进阶
+### 定义
+![alt text](../assets/imgs/jgtj1.png)
+
+### 结构体嵌套
+![alt text](../assets/imgs/jgtj2.png)
+
+3.嵌套结构体的成员访问：通过一系列成员访问运算符（.）来访问内层结构体的成员。
+每个成员访问运算符都表示进入下一层结构体
+![alt text](../assets/imgs/jgtj3.png)
+
+* 变量作为函数参数时，函数调用时发生 `"值传递"`
+```c
+#include <iostream>
+using namespace std;
+struct School{
+  char s_name[120];
+  int s_age;
+};
+void print_a(School s){
+  // 访问成员用 "变量名.成员名"
+  printf("%s %d\n", s.s_name, s.s_age);
+}
+int main() {
+  School sx = {"Shanghai High School", 100};
+  print_a(sx);
+  return 0;
+}
+```
+### 结构体指针作为函数参数
+
+将结构体指针作为函数参数是另一种常见的做法。和普通指针作为函数参数时一样，结
+构体指针作为函数参数时，函数调用时发生“地址传递”，在函数内部直接操作指针指向的
+内存地址，修改指针所指向的结构体的内容。
+
+在下面的例子中，School 结构体变量 sx 的地
+址传递给了函数 print_b，在这个函数内部对成员 s_age 进行了更改，这个更改等同于对实
+参 sx.s_age 的更改。函数内部访问结构体成员用“指针->成员名”的方式。
+
+![alt text](../assets/imgs/jgtj4.png)
+
+### 结构体数组作为函数参数
+将结构体指针作为函数参数是另一种常见的做法。和普通指针作为函数参数时一样，结
+构体指针作为函数参数时，函数调用时发生`“地址传递”`，在函数内部直接操作指针指向的
+内存地址，修改指针所指向的结构体的内容。
+![alt text](../assets/imgs/jgtj5.png)
+将结构体数组作为函数参数允许函数对多个同类结构体元素进行操作。
+
+在下面的例子中，传入数组 ar 和数组长度 3 给函数 print_all。在函数内部可以对数组
+内容进行遍历和修改。因为数组作为参数时，传入的是数组地址，实参和形参公用一个内存
+空间。换句话说，数组作为函数参数时，函数调用时发生“地址传递”。
+![alt text](../assets/imgs/jgtj6.png)
+
+* 当传递结构体数组给函数时，实际上传递的是指向数组第一个元素的指针。
+* 在传递结构体数组给函数时，数组的大小通常需要作为另一个参数传递。
+* 函数内部访问结构体成员用“ 数组[下标].成员名”的方式。
+### 当函数传入的参数是数组时，可以将形参定义成数组或者指针。
+![alt text](../assets/imgs/jgtj9.png)
+### 书籍排序
+* 冒泡排序升序
+![alt text](../assets/imgs/jgtj8.png)
+![alt text](../assets/imgs/jgtj7.png)
+```c
+#include <iostream>
+using namespace std;
+// 定义结构体
+struct  Book{
+  char name[21];
+  int price;
+};
+void sort(Book arr[], int n){
+  Book temp = {0, 0};
+  // 冒泡排序算法： 相邻的元素两两比较，
+  for (int i = 1; i < n; i++){
+    for (int j = 0; j < n-i; j++){
+      if (arr[j].price > arr[j+1].price){
+        // 交换
+        temp = arr[j];
+        arr[j] = arr[j+1];
+        arr[j+1] = temp;
+      }
+    }
+  }
+  // 输出生序排序结果
+  for (int i = 0; i < n; i++){
+    cout<< arr[i].name << " " << arr[i].price << endl;
+  }
+}
+
+int main() {
+  int n;
+  cin>> n;
+  Book arr[20];
+  for (int i = 0; i < n; i++){
+    cin>> arr[i].name >> arr[i].price;
+  }
+  sort(arr, n); // 排序
+}
+```
+
+### 谁考了第k名
+![alt text](../assets/imgs/jgtj10.png)
+![alt text](../assets/imgs/jgtj11.png)
+```c
+#include <iostream>
+using namespace std;
+struct  Student{
+  int num;
+  double score;
+};
+void sort(Student arr[], int n){
+  Student temp = {0, 0};
+  for (int i = 1; i < n; i++){
+    for (int j = 0; j < n-i; j++){
+      if (arr[j].score < arr[j+1].score){
+        // 交换
+        temp = arr[j];
+        arr[j] = arr[j+1];
+        arr[j+1] = temp;
+      }
+    }
+  }
+}
+
+int main() {
+  int n, k;
+  cin>> n >> k;
+  // 申明数组变量
+  Student arr[100];
+  for (int i = 0; i < n; i++){
+    cin>> arr[i].num >> arr[i].score;
+  }
+  sort(arr, n); // 排序 成绩降序
+
+  // 输出第k 名学生信息的 下标 -1
+  printf("第 %d 名： %d %.1f\n", k, arr[k-1].num , arr[k-1].score);
+}
+```
+
+### 用结构体求平均分
+![alt text](../assets/imgs/jgtj12.png)
+```c
+#include <iostream>
+using namespace std;
+struct  Student{
+  char name[20];
+  int num;
+  double score;
+};
+float avg(Student s[], int n){
+  float sum = 0;
+  for (int i = 0; i < n; i++){
+    // 求和
+    sum +=s[i].score;
+  }
+  return  sum/n;
+}
+
+int main() {
+  int n;
+  cin>> n;
+  Student stu[n];
+  for (int i = 0; i < n; i++){
+    cin>> stu[i].name>> stu[i].num >> stu[i].score;
+  }
+  printf("%.2f\n", avg(stu, n));
+  return 0;
+}
+```
+
+## 十五 文件和流
+* C++标准库中的文件流头文件
+`#include <fstream>`
+* ofstream 写数据到文件
+* 使用 ifstream 读取文件中的数据，需要 4 步：
+* ① 包含 C++文件流头文件
+* ② 用 ifstream 打开文件
+* ③ 读取文件内容
+* ④ 关闭文件
+
+### ofstream写数据到文件
+![alt text](../assets/imgs/file1.png)
+
+* 打开输出文件
+这个语句第一次运行时，会创建这个文件，后面每次运行，文件中的原有内容都会
+被清空。
+
+`ofstream 文件流对象名(<文件名>)`
+
+* 向文件写入信息
+`<<`流出运算符
+`ofstream对象 << 变量｜表达式｜常量`;
+
+```c
+#include <iostream>
+#include <fstream>
+using namespace std;
+int main() {
+  ofstream fout("测试写入文件.txt"); // 打开文件
+  fout << "Name: Lin" << endl;
+  fout << "Age: 20" << endl;
+  fout.close(); // 关闭文件
+  return 0;
+}
+```
+运行完上面👆代码，会在同级目录生成一个文件 `测试写入文件.txt`,文件内容
+![alt text](../assets/imgs/file2.png)
+
+* 关闭文件
+`文件流对象名.close();`
+
+### ifstream 读取文件中的数据
+
+* ifstream 文件流实现读取文件内容的编程。基本步骤也是 4 步：
+* ① 包含 C++文件流头文件
+* ② 用 ifstream 打开文件
+* ③ 读取文件内容
+* ④ 关闭文件
+
+* 打开输入文件的语句
+`ifstream 文件流对象名(<文件名>);`
+> * 这个语句声明了文件流对象，并打开<文件名>参数指定的文件，用于读取数据。
+> * 注意：
+> *  确保<文件名>指定的文件确实存在；
+> *  确保你的程序有读取该文件的权限；
+> *  如果只指定文件名（不含路径），这个文件需要和程序源代码文件在同一目录下；
+
+### 向文件中写入数据
+```c
+#include <iostream>
+#include <fstream>
+using namespace std;
+int main() {
+  int age;
+  char name[40];
+  ofstream fout("测试写入文件.txt"); // 打开文件
+  cin>> name>> age;
+  // 输出到文件
+  fout << "Name: " << name << endl;
+  fout << "Age: " << age << endl;
+  // 退出， 关闭打开的文件
+  fout.close();
+  return 0;
+}
+```
+
+![alt text](../assets/imgs/file3.png)
+![alt text](../assets/imgs/file4.png)
+
+### 记录平方根
+![alt text](../assets/imgs/file6.png)
+![alt text](../assets/imgs/file5.png)
+
+```c
+#include <iostream>
+#include <fstream>
+#include <cmath> //sqrt()
+#include <iomanip> //setprecision()
+using namespace std;
+int main() {
+  ofstream fout("记录平方根.txt"); // 创建对象，准备写入文件
+  if(fout.is_open()){
+    for (int i = 1; i <= 100; i++){
+      fout << i << "的平方根：";
+      fout << fixed << setprecision(2) << sqrt(i) << endl;
+    }
+    fout.close(); // 关闭文件
+    cout << "平方根已记录到文件中。" << endl;
+  } else {
+    cout << "无法打开文件进行写入。" << endl;
+  }
+  return 0;
+}
+```
+
+### 统计数字字符
+![alt text](../assets/imgs/file7.png)
+
+```c
+#include <iostream>
+#include <fstream>
+#include <cstring>
+using namespace std;
+int main() {
+  char line[100];
+  int total = 0;
+  ifstream fin("记录平方根.txt"); // 创建输入流，用于从文件读取
+  if(fin.is_open()){
+    //逐行读取，直到读完
+    while (fin >> line){
+      for (int i = 0; i < strlen(line); i++){
+        if(line[i] >= '0' && line[i] <= '9'){
+          total++;
+        }
+      }
+    }
+    cout << "数字字符个数：" << total << endl;
+    fin.close(); // 关闭输入流
+  } else {
+    cout << "无法打开文件进行写入。" << endl;
+  }
+  return 0;
+}
+```
+### 读出写入
+![alt text](../assets/imgs/file8.png)
+```c
+#include <iostream>
+#include <fstream>
+#include <cstring>
+using namespace std;
+int main(){
+  int n,sum = 0;
+  // 打开in.txt 文件
+  ifstream fin("in.txt");
+  if(fin.is_open()){
+    // 从文件读取一个整数，直到文件结束
+    while (fin >> n){
+      sum +=n;
+    }
+    fin.close(); // 关闭输入流
+
+    ofstream fout("out.txt");
+    if(fout.is_open()){
+      fout<< sum; //输出累加结束
+      fout.close(); // 关闭输出流
+    }else {
+      cout << "无法打开文件进行写入。" << endl;
+    }
+  }else {
+    cout << "无法打开文件进行读取。" << endl;
+  }
+  return 0;
+}
+```
+
+### 文件流的基本类型
+![alt text](../assets/imgs/file9.png)
+![alt text](../assets/imgs/file10.png)
+![alt text](../assets/imgs/file11.png)
+
+### 二进制(写入/读出)
+```c
+#include <iostream>
+#include <fstream>
+#include <cstring>
+using namespace std;
+int main(){
+  // 二进制写入整数
+  int number = 1231212;
+  ofstream binFile("out.txt", ios::binary); // 以二进制方式打开文件
+  binFile.write((char*)&number, sizeof(number)); // 将整数写入文件
+  binFile.close(); // 关闭输出流
+
+  // 二进制读取整数
+  int number2 = 0;
+  ifstream binFile2("out.txt", ios::binary); // 以二进制方式打开文件
+  binFile2.read((char*)&number2, sizeof(number2)); // 从文件读取整数
+  binFile2.close(); // 关闭输入流
+  cout << "读取的整数是：" << number2 << endl;
+  return 0;
+}
+```
+
+### 记流水账
+![alt text](../assets/imgs/file12.png)
