@@ -2629,3 +2629,248 @@ int main(){
 
 ### 记流水账
 ![alt text](../assets/imgs/file12.png)
+```c
+#include <iostream>
+#include <fstream>
+using namespace std;
+int main(){
+  int n;
+  char xm[50];
+  float money;
+  ofstream fout("journal.txt", ios::app); // 以追加方式打开文件
+  if (fout.is_open()){
+    cin>> n;
+    for (int i = 0; i < n; i++){
+      cin>> xm >> money;
+      fout << xm << ": " << money << endl;
+    }
+    fout.close(); // 关闭输出流
+  }else{
+    cout << "无法打开文件进行写入！" << endl;
+  }
+  return 0;
+}
+```
+
+### 文件重定向
+在 C++中，freopen 函数可以用来重定向标准输入（stdin）和标准输出（stdout）。以
+标准输出（stdout）的重定向为例，重定向前输出到屏幕，重定向后输出到指定的文件。
+
+
+```c
+#include <iostream>
+using namespace std;
+int main(){
+  freopen("out.txt", "w", stdout); // 重定向标准输出到文件
+  printf("Hello, World!\n");
+  cout << "这是重定向后的输出内容。" << endl;
+  fclose(stdout); // 关闭重定向的输出流
+  return 0;
+}
+```
+* 创建out.txt 文件 将输出的内容，输出到文件中
+Hello, World!
+
+这是重定向后的输出内容。
+
+相对应地，也可以用文件重定向的方式完成从文件读取内容的任务，只是这个重定向的
+是 stdin：
+`in.txt` 文件内容 12
+```c
+#include <iostream>
+using namespace std;
+int main(){
+  int n;
+  freopen("in.txt", "r", stdin); // 打开 in.txt”文件用于输入 r-read
+  cin>> n; // cin 语句从“in.txt” 读取数据
+  fclose(stdin); // 关闭文件
+  cout << n << endl; // 将读取的数据输出到屏幕 12
+  return 0;
+}
+```
+
+### freopen 函数
+freopen 函数的原型如下：
+```c
+#include <cstdio>FILE *freopen( const char *filename, const char *mode, FILE *stream);
+```
+![alt text](../assets/imgs/file14.png)
+
+* filename：要打开或创建的文件的名称。
+* mode：文件的打开模式，可以是"r"（只读）、"w"（只写，会覆盖现有文件）、"a"（追加）等，以及"b"（二进制模式）。
+* stream：要重定向的标准流的指针，如 stdin、stdout 或 stderr。
+
+![alt text](../assets/imgs/file13.png)
+不指定"b"时，默认的打开模式是文本模式。
+
+![alt text](../assets/imgs/file15.png)
+![alt text](../assets/imgs/file16.png)
+![alt text](../assets/imgs/file17.png)
+### 词组缩写
+![alt text](../assets/imgs/file18.png)
+![alt text](../assets/imgs/file19.png)
+```c
+#include <iostream>
+using namespace std;
+int main(){
+  int n;
+  char word[10];
+  char upper; // 用于存储大写字母
+  cin>> n;
+  for (int i = 0; i < n; i++){
+    cin>> word;
+    upper = toupper(word[0]); // 将第一个字母转换为大写
+    cout << upper;
+  }
+  return 0;
+}
+```
+
+### 词组缩写(文件重定向)
+![alt text](../assets/imgs/file20.png)
+![alt text](../assets/imgs/file21.png)
+### 数值累加(文件重定向)
+![alt text](../assets/imgs/file22.png)
+
+1. 新建 `in.txt`文件，内容 入上图 输入所示， 自动生成 `out.txt` 文件，并将结果写入
+```c
+#include <iostream>
+#include <cstdio> 
+using namespace std;
+int main(){
+  int n, sum = 0;
+  freopen("out.txt", "w", stdout); // 打开 out.txt”文件用于输出
+  freopen("in.txt", "r", stdin); // 打开 in.txt”文件用于输入
+  while (cin >> n){ // 从文件读取整数，直到文件结束
+    sum += n;
+ }
+ cout<< sum;
+ fclose(stdout);
+ fclose(stdin);
+  return 0;
+}
+```
+## 十六 string 类型
+* 字符串常量：用双引号括起来的字符序列，如 "Hello, World!"。
+* 字符数组：一种可以存储字符串的数组形式，如 char str[] = "Hello"。
+* string 类：C++标准库中的一个类，提供了丰富的字符串操作功能。
+* 使用 string 类型必须包含`<string>`头文件：`#include<string>`
+### 声明
+```c
+string str1;
+// 使用字符串常量初始化字符串
+string str2 = "Hello,World!";
+string str3("Hello,World!");
+// 使用字符数组初始化字符串
+char charArray[] = "Hello" ;
+string str4(charArray);
+
+// 使用另一个 string 变量来初始化
+string str5 = str2;
+
+// 使用部分字符串初始化字符串
+string str6(str2,6,2);// 从下标 6 开始的 2 个字符赋值给 str6
+
+string str7(str2,6);// 从下标 6 开始到末尾的内容赋值给 str7
+
+// 使用的重复的字符初始化字符串
+string str8(5,'A');// 把 5 个'A'赋值给 str8
+```
+![alt text](../assets/imgs/str1.png)
+
+```c
+#include <iostream>
+using namespace std;
+int main() {
+    string str = "Hello, World!";
+    cout<< str << endl;
+    // 字符串中的字符可以用变量[下标]的方式访问；下标从0 开始，表示字符串中的第一个字符，依次递增。
+    cout<< str[0] << endl; // 输出第一个字符 'H'
+    return 0;
+}
+```
+字符串变量的输入 
+1. 用`“cin>>str”`输入字符串
+2. 如果想输入包含空格的字符串，可以使用 getline()函数，该函数用于读入一行字符，格式如下:
+```c
+string str;
+getline(cin, str);
+cout<< str;
+```
+![alt text](../assets/imgs/str2.png)
+
+###   常用函数
+![alt text](../assets/imgs/str3.png)
+* 获取字符串长度
+![alt text](../assets/imgs/str4.png)
+![alt text](../assets/imgs/str5.png)
+* 查找子字符串
+![alt text](../assets/imgs/str6.png)
+* 拼接字符串
+![alt text](../assets/imgs/str7.png)
+* 插入函数
+![alt text](../assets/imgs/str8.png)
+* 提取子字符串
+![alt text](../assets/imgs/str9.png)
+* 删除子字符串
+![alt text](../assets/imgs/str10.png)
+
+* 替换子字符串
+![alt text](../assets/imgs/str11.png)
+### 字符串的大小比较
+![alt text](../assets/imgs/str12.png)
+![alt text](../assets/imgs/str13.png)
+
+* `compare()`函数
+![alt text](../assets/imgs/str14.png)
+
+> 查阅 C++在线参考手册 `https://legacy.cplusplus.com/reference/string/string/?kw=string。`
+
+![alt text](../assets/imgs/str15.png)
+
+### 删除后缀
+![alt text](../assets/imgs/str16.png)
+```c
+#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+    string word;
+    string s1, s2; //两位后缀，三位后缀
+    cin>> word; // 或者 getline(cin, word);
+    int len = word.length();
+    if(len >=2){
+      s1 = word.substr(len - 2, 2);
+    }
+    if(len >=3){
+      s2 = word.substr(len - 3, 3);
+    }
+    if(s1 == "er" || s1 == "ly") {
+      word = word.erase(len - 2, 2);
+    } else if (s2 == "ing") {
+      word = word.erase(len - 3, 3);
+    }
+    cout<< word << endl;
+    return 0;
+}
+```
+
+### 手机短号
+![alt text](../assets/imgs/str17.png)
+```c
+#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+    int n;
+    string phoneNumber;
+    string shortNumber;
+    cin >> n;
+    for (int i = 0; i < n; ++i) {
+      cin>> phoneNumber;
+      shortNumber = "6" + phoneNumber.substr(6);
+      cout<< shortNumber << endl;
+    }
+    return 0;
+}
+```
