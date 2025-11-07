@@ -2828,7 +2828,7 @@ cout<< str;
 
 ![alt text](../assets/imgs/str15.png)
 
-### 删除后缀
+### 🌰 删除后缀
 ![alt text](../assets/imgs/str16.png)
 ```c
 #include <iostream>
@@ -2855,7 +2855,7 @@ int main() {
 }
 ```
 
-### 手机短号
+### 🌰手机短号
 ![alt text](../assets/imgs/str17.png)
 ```c
 #include <iostream>
@@ -2871,6 +2871,116 @@ int main() {
       shortNumber = "6" + phoneNumber.substr(6);
       cout<< shortNumber << endl;
     }
+    return 0;
+}
+```
+
+### 🌰车牌问题
+![alt text](../assets/imgs/str18.png)
+```c
+#include <iostream>
+using namespace std;
+int main() {
+  string p;
+  int n, count =0;
+  cin>> n;
+  for (int i = 0; i < n; i++){
+    cin>> p;
+    if ((p[0] >= 'H' && p[0]<='Q') || (p[0] >= 'U' && p[0]<='Z') ){
+      count++;
+    }
+  }
+  cout<< count;
+  return 0;
+}
+```
+
+### 🌰字符串压缩
+![alt text](../assets/imgs/str19.png)
+```c
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string str;
+    char c; // 当前字符c
+    int cnt; // c字符出现的次数
+    cin>> str;
+    c = str[0];
+    cnt = 1;
+    // 从第二个字符开始遍历字符串
+    for (int i = 1; i < str.length(); i++){
+      if(str[i] == c){
+        cnt++;
+      }else {
+        cout<< cnt<< c;
+        c=str[i];
+        cnt = 1;
+      }
+    }
+    cout<< cnt<< c;
+    return 0;
+}
+```
+
+### 🌰字符串解压缩
+![alt text](../assets/imgs/str20.png)
+![alt text](../assets/imgs/str21.png)
+```c
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string str; //压缩后的字符串
+    string nstr; //数字字符串
+    cin>> str;
+    for (int i = 0; i < str.length(); i++){
+      if(isdigit(str[i])){
+        nstr += str[i]; //拼接数字字符串，直到遇到非数字字符（字符）
+      }else {
+        int n = stoi(nstr); // 数字字符串转为整数n
+        for (int j = 0; j < n; j++){
+          cout<< str[i];
+        }
+        nstr = ""; // 清空数字字符串备用
+      }
+    }
+    return 0;
+}
+
+// 12a1b13c
+// aaaaaaaaaaaabccccccccccccc
+```
+![alt text](../assets/imgs/str22.png)
+![alt text](../assets/imgs/str23.png)
+![alt text](../assets/imgs/str24.png)
+
+### 🌰 简单 a+b
+![alt text](image-4.png)
+![alt text](../assets/imgs/str25.png)
+
+```c
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string str;
+    string str_a, str_b;
+    int a, b;
+    cin>> str;
+    //  找到 + 的位置
+    int pos1 = str.find("+");
+    int pos2 = str.find("=");
+    //提取子串
+    str_a = str.substr(0, pos1);
+    str_b = str.substr(pos1 + 1, pos2-pos1);
+    // 将字符串转化为整数
+    a=stoi(str_a);
+    b=stoi(str_b);
+    cout<< a+ b;
     return 0;
 }
 ```
