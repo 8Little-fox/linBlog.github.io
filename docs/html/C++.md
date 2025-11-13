@@ -2958,7 +2958,6 @@ int main() {
 ![alt text](../assets/imgs/str24.png)
 
 ### 🌰 简单 a+b
-![alt text](image-4.png)
 ![alt text](../assets/imgs/str25.png)
 
 ```c
@@ -2984,3 +2983,24 @@ int main() {
     return 0;
 }
 ```
+
+## 异常处理
+C++通过 `throw` 语句和 `try ... catch` 语句实现对异常的处理
+![alt text](../assets/imgs/throw.png)
+
+```c
+#include <iostream>
+using namespace std;
+int main(){
+  try{
+    throw 1;
+  }catch(int e){
+    cout<< "捕获异常" << endl;
+  }
+  return 0;
+}
+```
+![alt text](../assets/imgs/throw2.png)
+![alt text](../assets/imgs/throw3.png)
+![alt text](../assets/imgs/throw4.png)
+![alt text](../assets/imgs/throw5.png)
