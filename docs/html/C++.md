@@ -35,6 +35,99 @@ auto x = 3.14;             // 自动类型推断
 ```
 ![alt text](../assets/imgs/guanjianzi.png)
 
+### extern
+* extern 是 C/C++ 中用于“声明外部存在的变量或函数”的关键字。
+* 它的核心目标是：
+> 告诉编译器：这个符号已经在别的地方定义，不要重新分配内存。链接时再去找它。
+1. extern 的基本作用
+* ✔ 声明变量（不定义）
+```c
+extern int count;
+```
+它表示：
+
+count 已在其他文件中定义
+
+这里不分配内存
+
+2. 多文件变量共享（最常见用途）
+`a.cpp`
+```c
+int count = 10;  // 定义并分配内存
+```
+`b.cpp`
+```c
+extern int count;  // 声明外部变量
+void func() {
+    std::cout << count;
+}
+```
+关键点：
+
+定义（Definition）只出现一次
+
+声明（Declaration）可以出现多次
+3. extern 与函数声明
+函数声明默认包含 extern，因此下面两个写法等价：
+```c
+extern void foo(int);
+void foo(int);
+
+```
+这一点让很多人使用时没有意识到它的存在。
+
+4. extern "C" —— C/C++ 混合编程的重要工具
+C++ 会对函数名进行 name mangling，如生成 `_Z5hello` 之类的符号。
+`extern "C" `禁用 C++ 的名字改编，使符号按 C 语言方式暴露。
+```c
+extern "C" {
+    void hello();
+}
+
+```
+用途：
+
+调用 C 语言库
+
+在 C 中实现函数，在 C++ 中使用
+
+硬件驱动开发、系统编程等跨语言需求
+
+5. extern + const：常见易错点
+默认情况下：
+
+const 变量具有 `内部链接`（internal linkage）
+
+导致它不能跨文件共享
+
+`a.cpp`
+```c
+const int SIZE = 100;  // 仅限本文件可见
+
+```
+
+`b.cpp`
+```c
+extern const int SIZE;  // 必须使用 extern 才能引用外部 const
+
+```
+如果不加 extern，两个文件会产生两个独立的常量。
+
+> extern = 全局公开，static = 文件私有
+
+
+::: tip 一句话总结
+extern 声明但不定义
+
+内存由“定义处”负责
+
+函数声明默认带 extern
+
+extern "C" 用于 C/C++ 互操作
+
+ extern const 才能让 const 跨文件共享
+ 是链接阶段行为，而非编译阶段行为
+:::
 ### 1.3 基本数据类型
 
 - 字节（Byte）是计算机存储数据的最小单元
@@ -731,7 +824,7 @@ int main() {
         arr[i] = arr[i-1];
     }
     // 插入新元素 , 长度会变长
-    arr[pos] = value;
+    arr[pos-1] = value;
     length++;
     // 输出数组
     for (int i = 0; i < length; i++) {
